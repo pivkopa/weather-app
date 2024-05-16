@@ -1,0 +1,14 @@
+@import "./components/weather/weather.scss";
+@import "./components/LanguageSelector/language-selector.scss";
+@import "./components/TemperatureButton/temperature-button.scss";
+
+.container {
+  width: 500px;
+}
+
+.top-container {
+  display: flex;
+  margin: 20px;
+  justify-content: center;
+  gap: 20px;
+}
