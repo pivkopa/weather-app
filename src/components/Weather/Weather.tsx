@@ -4,43 +4,44 @@ import { Forecast } from '../Forecast/Forecast';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import { useState } from 'react';
+import { getCelsius, getFahrenheit } from './helper';
+import { CELSIUS, FAHRENHEIT } from './temperature-variables';
 
 export const Weather = ({
-  data,
-  unit,
-}: { data: WeatherData, unit: string }) => {
+  data
+}: { data: WeatherData }) => {
   const [temperature, setTemperature] = useState(data?.main.temp);
-  const [metric, setMetric] = useState(unit);
+  const [metric, setMetric] = useState(data?.unit);
   const [forcastList, setForecastList] = useState(data.forecastData)
   const { t } = useTranslation();
 
   const changingTemperature = (value: string) => {
-    if ((value === 'C' && unit === 'metric')) {
+    if ((value === CELSIUS && data?.unit === CELSIUS)) {
       setTemperature(data?.main.temp);
       setForecastList(data.forecastData);
-      setMetric('metric');
-    } else if ((value === 'F' && unit === 'imperial')) {
+      setMetric(CELSIUS);
+    } else if ((value === FAHRENHEIT && data?.unit === FAHRENHEIT)) {
       setTemperature(data?.main.temp);
       setForecastList(data.forecastData);
-      setMetric('imperial');
-    } else if (value === 'C' && metric === 'imperial') {
-      setTemperature((data?.main.temp - 32) * 5 / 9);
+      setMetric(FAHRENHEIT);
+    } else if (value === CELSIUS && metric === FAHRENHEIT) {
+      setTemperature(getCelsius(data?.main.temp));
       const list = data.forecastData.list.map((item) => {
         const main = { ...item.main, temp: (item.main.temp - 32) * 5 / 9 }
         return { ...item, main }
       });
       const newForecast = { ...data.forecastData, list }
       setForecastList(newForecast);
-      setMetric('metric');
-    } else if (value === 'F' && metric === 'metric') {
-      setTemperature((data?.main.temp * 9 / 5) + 32);
+      setMetric(CELSIUS);
+    } else if (value === FAHRENHEIT && metric === CELSIUS) {
+      setTemperature(getFahrenheit(data?.main.temp));
       const list = data.forecastData.list.map((item) => {
         const main = { ...item.main, temp: (item.main.temp * 9 / 5) + 32 }
         return { ...item, main }
       });
       const newForecast = { ...data.forecastData, list }
       setForecastList(newForecast);
-      setMetric('imperial');
+      setMetric(FAHRENHEIT);
     }
   }
 
@@ -57,18 +58,18 @@ export const Weather = ({
           </div>
           <div className="changing-metric-container">
             <button onClick={() => {
-              changingTemperature('C')
+              changingTemperature(CELSIUS)
             }} className={
               cn('changing-metric', {
-                tempSelected: metric === 'metric',
+                tempSelected: metric === CELSIUS,
               })
             }>C</button>
             <div className="changing-metric-border">|</div>
             <button onClick={() => {
-              changingTemperature('F')
+              changingTemperature(FAHRENHEIT)
             }} className={
               cn('changing-metric', {
-                tempSelected: metric === 'imperial',
+                tempSelected: metric === FAHRENHEIT,
               })
             }>F</button>
           </div>

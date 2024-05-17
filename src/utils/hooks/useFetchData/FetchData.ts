@@ -1,13 +1,14 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../Store";
-import { getCityData, getForecastData } from "../../../Store/Slices/WeatherSlice";
+import { getWeatherData } from "../../../Store/Slices/WeatherSlice";
+import { getForecastData } from "../../../Store/Slices/ForecastSlice";
 
 export function FetchedData(city: string, unit: string) {
  const dispatch = useDispatch<AppDispatch>();
 
   const fetchData = () => {
     dispatch(
-      getCityData({
+      getWeatherData({
         city,
         unit,
       }))
@@ -25,4 +26,4 @@ export function FetchedData(city: string, unit: string) {
     fetchData,
     fetchForeCastData,
   }
-}
+};

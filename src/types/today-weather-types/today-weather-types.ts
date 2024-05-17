@@ -14,7 +14,8 @@ export interface WeatherData {
   visibility: number;
   weather: Weather[];
   wind: Wind;
-  forecastData: ForecastData
+  forecastData: ForecastData;
+  unit: string;
 }
 
 export interface Clouds {
@@ -68,4 +69,14 @@ export interface Coordinates {
 
 export interface Position {
   coords: Coordinates;
+}
+
+export interface WeatherRequest {
+  city: string;
+  unit: string;
+}
+
+export interface WeatherData {
+  data: any;
+  error: string | null;
 }

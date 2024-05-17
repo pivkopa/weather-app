@@ -34,10 +34,10 @@ const App = () => {
     if (weatherListStore.length && weatherList.length < 1) {
       setWeatherList(weatherListStore);
     }
+
+    navigator.geolocation.getCurrentPosition(success, error);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  navigator.geolocation.getCurrentPosition(success, error);
 
   const checkForHaving = () => {
     const check = weatherList.some((item) => {
@@ -58,7 +58,8 @@ const App = () => {
         setWeatherList(currentWeatherList => {
           const allWeather = {
             ...todayWeatherData?.data,
-            forecastData: forecastData?.data
+            forecastData: forecastData?.data,
+            unit,
           }
           const newList = [...currentWeatherList, allWeather];
           setWeatherListStore(newList);
@@ -79,7 +80,7 @@ const App = () => {
         {weatherList.length &&
           weatherList.map((item, index) => (
             <div key={index} className="weather-grid-item">
-              <Weather data={item} unit={unit} />
+              <Weather data={item} />
             </div>
           ))}
       </div>

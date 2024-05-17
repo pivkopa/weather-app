@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export function useLocalStorage<T>(key: string, startValue: T) {
   const [data, setData] = useState(() => {
-    const localData = localStorage.getItem('weatherList');
+    const localData = localStorage.getItem(key);
 
     if (!localData) {
       return startValue;
@@ -23,4 +23,4 @@ export function useLocalStorage<T>(key: string, startValue: T) {
   }
 
   return [data, saveItem];
-}
+};

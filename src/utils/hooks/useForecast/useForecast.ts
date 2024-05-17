@@ -89,4 +89,4 @@ export const useForecast = (data: ForecastData) => {
     graphoptions,
     width,
   }
-}
+};
